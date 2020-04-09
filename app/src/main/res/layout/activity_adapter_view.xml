@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorToolbar">
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <ImageView
+              android:layout_width="150dp"
+              android:layout_height="140dp"
+              android:src="@drawable/cartel"
+              android:id="@+id/imgAdapter"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="#FF000040"
+              android:backgroundTint="@android:color/black"
+              android:text="  27 km..."
+              android:layout_marginStart="10dp"
+              android:textStyle="normal"
+              android:layout_marginTop="115dp"
+              android:textColor="@android:color/white"
+              android:id="@+id/tvDistKmts"/>
+      </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PRUEBA1,PRUEBA2,PRUEBA3"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/tvNomRestaurante"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PRUEBA1,PRUEBA2,PRUEBA3"
+                android:layout_marginStart="5dp"
+                android:textStyle="normal"
+                android:layout_marginTop="7dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/tvDireRestaurante"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

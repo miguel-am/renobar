@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">renobar</string>
+    <string name="Área">Área privada</string>
+    <string name="Enlace">www.apprenobar.es</string>
+    <string name="Restaurantes">Restaurantes</string>
+    <string name="Código_QR">Código QR</string>
+    <string name="Instagram">Instagram</string>
+    <string name="title_activity_maps_renobar">Map</string>
+    <string name="lupa">Buscar</string>
+</resources>
