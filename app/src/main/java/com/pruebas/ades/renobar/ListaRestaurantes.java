@@ -238,14 +238,14 @@ public class ListaRestaurantes extends AppCompatActivity {
     }
     class Task extends AsyncTask<Void,Void,Void>{
 
-        String registros="",error="",URL="jdbc:mysql://127.0.0.1//sqlades",USUARIO="ades",CONTRASEÑA="almogabar";
+        String registros="",error="",URL="jdbc:mysql://bbdd.renobarapp.es/ddb146636",USUARIO="ddb146636",CONTRASEÑA=":mM(F3E^LkSS";
 
         @Override
         protected Void doInBackground(Void... voids) {
 
             try {
                 Class.forName ( "com.mysql.jdbc.Driver" );
-                Connection con=DriverManager.getConnection("jdbc:mysql://bbdd.renobarapp.es/ddb146636","ddb146636",":mM(F3E^LkSS");
+                Connection con=DriverManager.getConnection(URL,USUARIO,CONTRASEÑA);
                 Statement statement=con.createStatement ();
                 ResultSet cursor=statement.executeQuery ( "select * from Restaurantes" );
 
@@ -254,10 +254,12 @@ public class ListaRestaurantes extends AppCompatActivity {
                     registros=cursor.getString ( "id") + " , " + cursor.getString ( "nombre") + " , " +
                           " , " + cursor.getString ( "direccion") + " , " +cursor.getString ( "imagen") + " , " +cursor.getString ( "url");
 
+                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32 kmts..." ,R.drawable.logo_renobar) );
+
 
 
                 }
-
+//                listaAdapter.notifyDataSetChanged ();
             } catch (ClassNotFoundException | SQLException e) {
                error= e.toString ();
               e.printStackTrace ();

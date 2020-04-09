@@ -1,10 +1,12 @@
 package com.pruebas.ades.renobar.AdaptadorLista;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pruebas.ades.renobar.R;
@@ -17,6 +19,8 @@ public class ListaAdapter extends BaseAdapter {
     private List <Restaurante> restaurante;
     private Context contexto;
     private TextView nombre, direccion, kmts;
+    private Uri url;
+    private ImageView imagen;
 
     public ListaAdapter(List <Restaurante> restaurante, Context contexto) {
         this.restaurante = restaurante;
@@ -49,10 +53,12 @@ public class ListaAdapter extends BaseAdapter {
             nombre=convertView.findViewById ( R.id.tvNomRestaurante );
             direccion=convertView.findViewById ( R.id.tvDireRestaurante );
             kmts=convertView.findViewById ( R.id.tvDistKmts );
+            imagen=convertView.findViewById ( R.id.imgAdapter );
 
             nombre.setText ( restaurante.get ( position ).getNombre () );
             direccion.setText ( restaurante.get ( position ).getDireccion () );
             kmts.setText ( restaurante.get ( position ).getKmts () );
+
 
         }
 
