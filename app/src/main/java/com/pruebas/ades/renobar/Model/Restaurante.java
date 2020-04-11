@@ -1,5 +1,6 @@
 package com.pruebas.ades.renobar.Model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,14 +9,46 @@ public class Restaurante implements Parcelable {
     private String nombre;
     private String direccion;
     private String kmts;
-    private int imagen;
+    private String imagen;
 
-    public Restaurante(String nombre, String direccion, String kmts,int imagen) {
+    public Restaurante(String nombre, String direccion, String kmts,String imagen) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.imagen = imagen;
         this.kmts=kmts;
     }
+
+    protected Restaurante(Parcel in) {
+        nombre = in.readString ();
+        direccion = in.readString ();
+        kmts = in.readString ();
+        imagen = in.readString ();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString ( nombre );
+        dest.writeString ( direccion );
+        dest.writeString ( kmts );
+        dest.writeString ( imagen );
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator <Restaurante> CREATOR = new Creator <Restaurante> () {
+        @Override
+        public Restaurante createFromParcel(Parcel in) {
+            return new Restaurante ( in );
+        }
+
+        @Override
+        public Restaurante[] newArray(int size) {
+            return new Restaurante[size];
+        }
+    };
 
     public String getKmts() {
         return kmts;
@@ -41,42 +74,14 @@ public class Restaurante implements Parcelable {
         this.direccion = direccion;
     }
 
-    public int getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(int imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString ( this.nombre );
-        dest.writeString ( this.direccion );
-        dest.writeInt ( this.imagen );
-    }
-
-    protected Restaurante(Parcel in) {
-        this.nombre = in.readString ();
-        this.direccion = in.readString ();
-        this.imagen = in.readInt ();
-    }
-
-    public static final Parcelable.Creator <Restaurante> CREATOR = new Parcelable.Creator <Restaurante> () {
-        @Override
-        public Restaurante createFromParcel(Parcel source) {
-            return new Restaurante ( source );
-        }
-
-        @Override
-        public Restaurante[] newArray(int size) {
-            return new Restaurante[size];
-        }
-    };
 }

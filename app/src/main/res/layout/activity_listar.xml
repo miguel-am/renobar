@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorToolbar"
         android:background="@android:color/white"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:inputType="textFilter"
         android:id="@+id/schRestaurante">
 

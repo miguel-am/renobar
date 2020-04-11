@@ -1,6 +1,7 @@
 package com.pruebas.ades.renobar;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -83,21 +84,7 @@ public class ListaRestaurantes extends AppCompatActivity {
         task.execute (  );
 
 
-        restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10 kmts..." ,R.drawable.qr ) );
 
-        restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20 kmts..." ,R.drawable.qr ) );
-
-        restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29 kmts..." ,R.drawable.qr ) );
-
-        restaurantes.add ( new Restaurante ( "Fruits vegen","Paseo castellana, 102 Madrid","32 kmts..." ,R.drawable.qr ) );
-
-        listaAdapter=new ListaAdapter ( restaurantes, ListaRestaurantes.this );
-        listar.setAdapter(listaAdapter);
-
-
-
-        miArray=new ArrayList<>();
-        miArray.addAll(restaurantes);
         refrescar.setColorSchemeResources ( R.color.colorRefresh1 );
         refrescar.setOnRefreshListener ( new SwipeRefreshLayout.OnRefreshListener () {
             @Override
@@ -240,6 +227,7 @@ public class ListaRestaurantes extends AppCompatActivity {
 
         String registros="",error="",URL="jdbc:mysql://bbdd.renobarapp.es/ddb146636",USUARIO="ddb146636",CONTRASEÑA=":mM(F3E^LkSS";
 
+        @SuppressLint("WrongThread")
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -252,23 +240,40 @@ public class ListaRestaurantes extends AppCompatActivity {
                 while(cursor.next ()){
 
                     registros=cursor.getString ( "id") + " , " + cursor.getString ( "nombre") + " , " +
-                          " , " + cursor.getString ( "direccion") + " , " +cursor.getString ( "imagen") + " , " +cursor.getString ( "url");
+                            " , " + cursor.getString ( "direccion") + " , " +cursor.getString ( "imagen") + " , " +cursor.getString ( "url");
 
-                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32 kmts..." ,R.drawable.logo_renobar) );
+                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32km " ,cursor.getString ( "imagen" )) );
 
 
 
                 }
+                restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10km" ,"https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_960_720.jpg" ));
+
+                restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20km" ,"https://cdn.pixabay.com/photo/2015/09/02/12/35/bar-918541_960_720.jpg" ) );
+
+                restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29km" ,"https://cdn.pixabay.com/photo/2015/03/26/09/54/restaurant-690569_960_720.jpg" ) );
+
+                restaurantes.add ( new Restaurante ( "Fruits vegen","Paseo castellana, 102 Madrid","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" ) );
+
+
 //                listaAdapter.notifyDataSetChanged ();
             } catch (ClassNotFoundException | SQLException e) {
-               error= e.toString ();
-              e.printStackTrace ();
+                error= e.toString ();
+                e.printStackTrace ();
             }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
+            listaAdapter=new ListaAdapter ( restaurantes, ListaRestaurantes.this );
+            listar.setAdapter(listaAdapter);
+
+
+
+            miArray=new ArrayList<>();
+            miArray.addAll(restaurantes);
 
             Log.e ( "resultados" ,registros );
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.pruebas.ades.renobar.R;
 import com.pruebas.ades.renobar.Model.Restaurante;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class ListaAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
         if(convertView == null){
 
             LayoutInflater inflater=( LayoutInflater )contexto.getSystemService ( Context.LAYOUT_INFLATER_SERVICE );
@@ -58,6 +60,9 @@ public class ListaAdapter extends BaseAdapter {
             nombre.setText ( restaurante.get ( position ).getNombre () );
             direccion.setText ( restaurante.get ( position ).getDireccion () );
             kmts.setText ( restaurante.get ( position ).getKmts () );
+
+            kmts.setCompoundDrawablesWithIntrinsicBounds (0,0, R.drawable.ic_place_white_24dp,0 );
+            Picasso.get ().load ( restaurante.get ( position ).getImagen () ).into(imagen);
 
 
         }
