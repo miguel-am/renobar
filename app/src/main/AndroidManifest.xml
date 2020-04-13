@@ -12,9 +12,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icoreno"
+        android:icon="@drawable/splashscreen2"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icoreno"
+        android:roundIcon="@drawable/splashscreen2"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".Portada"></activity>

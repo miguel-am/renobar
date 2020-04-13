@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent instagram=new Intent(MainActivity.this,PerfilInstagram.class);
                 startActivity ( instagram );
+                finish ();
 
             }
         } );
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent listaRestaurante =new Intent(MainActivity.this, ListaRestaurantes.class);
                 startActivity ( listaRestaurante );
-
+                finish ();
             }
         } );
 
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent qr=new Intent(context,Portada.class);
                 qr.putExtra ( "qr",result.getContents () );
                 startActivity ( qr );
+                finish ();
                 Log.e ( "result", "Es correcto" + result.getContents ());
             }else {
 

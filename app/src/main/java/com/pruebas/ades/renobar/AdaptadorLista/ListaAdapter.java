@@ -61,7 +61,7 @@ public class ListaAdapter extends BaseAdapter {
             direccion.setText ( restaurante.get ( position ).getDireccion () );
             kmts.setText ( restaurante.get ( position ).getKmts () );
 
-            kmts.setCompoundDrawablesWithIntrinsicBounds (0,0, R.drawable.ic_place_white_24dp,0 );
+            kmts.setCompoundDrawablesWithIntrinsicBounds (0,0, R.drawable.ic_place,0 );
             Picasso.get ().load ( restaurante.get ( position ).getImagen () ).into(imagen);
 
 
