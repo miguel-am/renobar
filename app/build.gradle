@@ -31,9 +31,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation files('libs/mysql-connector-java-5.1.38-bin.jar')
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation  group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
-
-
+    implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
 
 }

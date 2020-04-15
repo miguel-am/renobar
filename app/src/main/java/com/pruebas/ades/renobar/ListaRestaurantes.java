@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -104,25 +105,35 @@ public class ListaRestaurantes extends AppCompatActivity {
         Task task = new Task ();
         task.execute ();
 
+        listar.setOnItemClickListener ( new AdapterView.OnItemClickListener () {
+            @Override
+            public void onItemClick(AdapterView <?> parent, View view, int position, long id) {
 
-        refrescar.setColorSchemeResources ( R.color.colorRefresh1 );
+                Intent url=new Intent(ListaRestaurantes.this,RestauranteSeleccionado.class);
+                url.putExtra ( "url",restaurantes.get ( position ).getUrl () );
+                startActivity ( url );
+            }
+        } );
+
+
+
+
         refrescar.setOnRefreshListener ( new SwipeRefreshLayout.OnRefreshListener () {
             @Override
             public void onRefresh() {
                 try {
-                    // refrescar.setRefreshing(true);
-
 
                     Thread.sleep ( 1500 );
-                    refrescar.setColorSchemeResources ( R.color.colorRefresh3 );
+                    listaAdapter = new ListaAdapter ( restaurantes, ListaRestaurantes.this );
+                    listar.setAdapter ( listaAdapter );
 
                 } catch (InterruptedException e) {
                     e.printStackTrace ();
                 }
-                listaAdapter = new ListaAdapter ( restaurantes, ListaRestaurantes.this );
-                listar.setAdapter ( listaAdapter );
 
-                refrescar.setRefreshing ( false );
+
+
+               refrescar.setRefreshing ( false );
             }
         } );
 
@@ -324,6 +335,7 @@ public class ListaRestaurantes extends AppCompatActivity {
                 basicDataSource.setLogAbandoned(true);
                 basicDataSource.setTestWhileIdle(true);
                 basicDataSource.setTestOnReturn(true);
+                basicDataSource.setMaxActive ( -1 );
                 basicDataSource.setRemoveAbandonedTimeout(60);
 
                 Connection con=basicDataSource.getConnection ();
@@ -336,18 +348,24 @@ public class ListaRestaurantes extends AppCompatActivity {
                     registros=cursor.getString ( "id") + " , " + cursor.getString ( "nombre") + " , " +
                             " , " + cursor.getString ( "direccion") + " , " +cursor.getString ( "imagen") + " , " +cursor.getString ( "url");
 
-                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32km " ,cursor.getString ( "imagen" )) );
+                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32km " ,cursor.getString ( "imagen" ),cursor.getString ( "url" )) );
 
+                    restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10km" ,"https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_960_720.jpg", cursor.getString ( "url" )));
+
+                    restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20km" ,"https://cdn.pixabay.com/photo/2015/09/02/12/35/bar-918541_960_720.jpg" ,cursor.getString ( "url" )));
+
+                    restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29km" ,"https://cdn.pixabay.com/photo/2015/03/26/09/54/restaurant-690569_960_720.jpg" ,cursor.getString ( "url" ) ));
+
+                    restaurantes.add ( new Restaurante ( "Fruits vegen","Paseo castellana, 102 Madrid","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" , cursor.getString ( "url" )));
 
 
                 }
-                restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10km" ,"https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_960_720.jpg" ));
+                basicDataSource.close ();
+                con.close ();
+                statement.close ();
+                cursor.close ();
 
-                restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20km" ,"https://cdn.pixabay.com/photo/2015/09/02/12/35/bar-918541_960_720.jpg" ) );
 
-                restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29km" ,"https://cdn.pixabay.com/photo/2015/03/26/09/54/restaurant-690569_960_720.jpg" ) );
-
-                restaurantes.add ( new Restaurante ( "Fruits vegen","Paseo castellana, 102 Madrid","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" ) );
 
 
            calcularDistancias ();

@@ -10,12 +10,14 @@ public class Restaurante implements Parcelable {
     private String direccion;
     private String kmts;
     private String imagen;
+    private String url;
 
-    public Restaurante(String nombre, String direccion, String kmts,String imagen) {
+    public Restaurante(String nombre, String direccion, String kmts,String imagen,String url) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.imagen = imagen;
         this.kmts=kmts;
+        this.url=url;
     }
 
     protected Restaurante(Parcel in) {
@@ -23,7 +25,10 @@ public class Restaurante implements Parcelable {
         direccion = in.readString ();
         kmts = in.readString ();
         imagen = in.readString ();
+        url=in.readString();
     }
+
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -31,6 +36,7 @@ public class Restaurante implements Parcelable {
         dest.writeString ( direccion );
         dest.writeString ( kmts );
         dest.writeString ( imagen );
+        dest.writeString ( url );
     }
 
     @Override
@@ -49,6 +55,14 @@ public class Restaurante implements Parcelable {
             return new Restaurante[size];
         }
     };
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getKmts() {
         return kmts;

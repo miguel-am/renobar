@@ -48,6 +48,7 @@
         android:clickable="true"
         android:layout_gravity="end|bottom"
         android:layout_marginRight="10dp"
+        android:backgroundTint="@android:color/white"
         android:src="@drawable/ic_place_black_24dp" />
 
 
