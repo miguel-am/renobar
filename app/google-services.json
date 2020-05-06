@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "35541250064",
+    "firebase_url": "https://renobar-273309.firebaseio.com",
+    "project_id": "renobar-273309",
+    "storage_bucket": "renobar-273309.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35541250064:android:59b3d2d2e3b2a2daed9a95",
+        "android_client_info": {
+          "package_name": "com.pruebas.ades.renobar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35541250064-r352ktatvqnebc27afe91k88n2rkh1ns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp--aq8v6E_0juCE3LgQ4lhNWhDthJH9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35541250064-r352ktatvqnebc27afe91k88n2rkh1ns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

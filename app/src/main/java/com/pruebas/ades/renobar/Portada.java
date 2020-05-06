@@ -50,28 +50,30 @@ public class Portada extends AppCompatActivity {
 
     private void cargarPortada() {
 
-        String url1 ="https://www.apprenobar.es";
-        vistaPortada.getSettings ().setJavaScriptEnabled ( true );
-        vistaPortada.setWebViewClient ( new WebViewClient () );
-        vistaPortada.loadUrl ( url1 );
 
         Bundle paquete=getIntent().getExtras();
 
         if(paquete != null) {
 
             String url2=paquete.getString ( "qr" );
+            String appRenobar=paquete.getString ( "appempresas" );
+            String areaPrivada=paquete.getString ( "area" );
 
+            vistaPortada.getSettings ().setJavaScriptEnabled ( true );
+            vistaPortada.setWebViewClient ( new WebViewClient () );
 
-
-
-
-            if ( paquete != null || paquete.getString ( "qr" ).equals ( url2 ) ){
-
-                vistaPortada.getSettings ().setJavaScriptEnabled ( true );
-                vistaPortada.setWebViewClient ( new WebViewClient () );
+            if(url2 !=null) {
                 vistaPortada.loadUrl ( url2 );
-
             }
+
+            if(appRenobar!=null){
+                vistaPortada.loadUrl ( appRenobar );
+            }
+
+            if(areaPrivada!=null){
+                vistaPortada.loadUrl ( areaPrivada );
+            }
+
         }
     }
 

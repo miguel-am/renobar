@@ -20,7 +20,7 @@
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
 
@@ -61,16 +61,18 @@
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/guidelineV">
 
+
+
             <TextView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="@android:color/white"
-                android:text="¡DEVORA TU APP  FAVORITA Y DISFRUTA DE LO SENCILLO!"
+                android:text="@string/eslogan_app"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@id/guideline2"
                 app:layout_constraintStart_toStartOf="@id/guideline"
@@ -159,8 +161,8 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:typeface="normal"
-        android:layout_marginTop="30dp"
-        android:textSize="18dp"
+        android:layout_marginTop="30sp"
+        android:textSize="18sp"
         android:text="@string/Área"
         app:layout_constraintEnd_toStartOf="@id/clSecundaria"
         app:layout_constraintStart_toStartOf="@id/clSecundaria"
@@ -173,9 +175,9 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:typeface="normal"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="70dp"
-        android:textSize="18dp"
+        android:layout_marginTop="40sp"
+        android:layout_marginBottom="70sp"
+        android:textSize="18sp"
         android:text="@string/Enlace"
         app:layout_constraintEnd_toStartOf="@id/tvArea"
         app:layout_constraintStart_toStartOf="@id/tvArea"

@@ -7,4 +7,9 @@
     <string name="Instagram">Instagram</string>
     <string name="title_activity_maps_renobar">Map</string>
     <string name="lupa">Buscar</string>
+    <string name="eslogan_app">¡Devora tu app favorita y disfruta de lo sencillo!</string>
+    <string name="Message">message</string>
+    <string name="Title">title</string>
+    <string name="nombreRestaurante">Nombre restaurante</string>
+    <string name="direRestaurante">Direccion restaurante</string>
 </resources>

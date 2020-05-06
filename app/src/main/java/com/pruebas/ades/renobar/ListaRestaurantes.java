@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -32,20 +32,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.pruebas.ades.renobar.AdaptadorLista.ListaAdapter;
 
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -53,8 +48,6 @@ import java.util.Locale;
 import com.pruebas.ades.renobar.Model.Restaurante;
 
 import org.apache.commons.dbcp.BasicDataSource;
-
-import javax.sql.DataSource;
 
 public class ListaRestaurantes extends AppCompatActivity {
 
@@ -141,7 +134,7 @@ public class ListaRestaurantes extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent locRestaurante = new Intent ( ListaRestaurantes.this, maps_renobar.class );
-                locRestaurante.putExtra ( "localizar", ( Serializable ) restaurantes );
+                locRestaurante.putParcelableArrayListExtra ( "localizar", ( ArrayList <? extends Parcelable> ) restaurantes );
                 startActivity ( locRestaurante );
             }
         } );
@@ -176,9 +169,10 @@ public class ListaRestaurantes extends AppCompatActivity {
                 //geolocalizamos direccion de los restaurantes
                 direccion = geo.getFromLocationName ( restaurantes.get ( i ).getDireccion (), 1 );
 
-                locRestaurante.setLatitude ( direccion.get ( 0 ).getLatitude () );//latitud restaurante
-                locRestaurante.setLongitude ( direccion.get ( 0 ).getLongitude () );//longitud restauarantes
-
+                if(direccion.size ()>0) {
+                    locRestaurante.setLatitude ( direccion.get ( 0 ).getLatitude () );//latitud restaurante
+                    locRestaurante.setLongitude ( direccion.get ( 0 ).getLongitude () );//longitud restauarantes
+                }
                 if ( loc != null ) {
                     Location  locMiUbicacion = new Location ( "localizacion 2" );
                     latitud = loc.getLatitude ();//nuestra latitud
@@ -218,14 +212,89 @@ public class ListaRestaurantes extends AppCompatActivity {
                 finish ();
                 break;
 
-            case R.id.lupa:
-                buscar ();
-                return true;
+            case R.id.itemDire:
+
+                buscarDireccion();
+                break;
+
+            case R.id.itemNombre:
+                buscarNombre ();
+                break;
 
         }
         return super.onOptionsItemSelected ( item );
     }
-//dibujar en el toolbar menu de opciones
+
+    private void buscarDireccion() {
+
+        buscar.setVisibility ( View.VISIBLE );
+        buscar.setQueryHint ( "Buscar restaurante" );
+
+        buscar.setOnQueryTextListener ( new SearchView.OnQueryTextListener () {
+            @Override
+            public boolean onQueryTextSubmit(String query) {//metodo de busqueda clicar lupa
+
+                restaurantes.clear ();
+                for(Restaurante res: miArray){
+                    //convertimos el texto de la lista y del buscador en minusculas y si coincide al completo lo mostramos como resultado
+                    if(res.getDireccion ().toLowerCase (  ).contains ( query.trim ().toLowerCase () )){
+
+                        restaurantes.add ( res );
+                        Log.e ( "añadido",res.getNombre () );
+                    }else{
+                        Log.e ( "borrado",res.getNombre () );
+                        restaurantes.remove ( res );
+                    }
+                }
+                //actualizamos lista
+                listaAdapter=new ListaAdapter ( restaurantes, ListaRestaurantes.this );
+                listar.setAdapter(listaAdapter);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {//metodo de busqueda por caracter escrito
+                newText=newText.toLowerCase ( Locale.getDefault ());
+
+                restaurantes.clear();
+
+                if(newText.length ()==0){
+                   restaurantes.addAll(miArray);
+                }else{
+                    for(Restaurante res: miArray){
+                        //convertimos el texto de la lista y del buscador en minusculas y si coinciden va mostrando resultados de la lista
+                        if(res.getDireccion ().toLowerCase (  ).contains ( newText.toLowerCase () )){
+                            restaurantes.add(res);
+                            listaAdapter=new ListaAdapter ( restaurantes, ListaRestaurantes.this );
+                            listar.setAdapter(listaAdapter);
+
+                        }
+
+                    }
+                    listaAdapter.notifyDataSetChanged ();
+                    Log.e ( "adapter","" );
+                }
+
+                return true;
+            }
+        } );
+
+        buscar.setOnCloseListener ( new SearchView.OnCloseListener () {
+            @Override
+            public boolean onClose() {
+                //ocultamos el buscador y mostramos la lista
+                buscar.setVisibility ( View.GONE );
+                restaurantes.clear ();
+                restaurantes.addAll(miArray);
+                listaAdapter=new ListaAdapter ( restaurantes, ListaRestaurantes.this );
+                listar.setAdapter(listaAdapter);
+                return false;
+            }
+        } );
+    }
+
+    //dibujar en el toolbar menu de opciones
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater ();
@@ -235,7 +304,7 @@ public class ListaRestaurantes extends AppCompatActivity {
 
 //metodo para buscar restaurantes en el buscador
     //buscamos por caracter o cuando tengamos el texto completo clicando la lupa
-    private void buscar() {
+    private void buscarNombre() {
 
         buscar.setVisibility ( View.VISIBLE );
         buscar.setQueryHint ( "Buscar restaurante" );
@@ -329,7 +398,7 @@ public class ListaRestaurantes extends AppCompatActivity {
                 basicDataSource.setUsername("ddb146636");
                 basicDataSource.setPassword(":mM(F3E^LkSS");
                 basicDataSource.setUrl("jdbc:mysql://bbdd.renobarapp.es/ddb146636");
-                basicDataSource.setValidationQuery ( "select 1" );
+                basicDataSource.setValidationQuery ( "select 2" );
                 basicDataSource.setRemoveAbandoned(true);
                 basicDataSource.setTestOnBorrow(true);
                 basicDataSource.setLogAbandoned(true);
@@ -342,24 +411,39 @@ public class ListaRestaurantes extends AppCompatActivity {
                 Statement statement=con.createStatement ();
                 ResultSet cursor=statement.executeQuery ( "select * from Restaurantes" );
 
+                String urlRestaurantes="", direRestaurantes="";
 
                 while(cursor.next ()){
 
                     registros=cursor.getString ( "id") + " , " + cursor.getString ( "nombre") + " , " +
                             " , " + cursor.getString ( "direccion") + " , " +cursor.getString ( "imagen") + " , " +cursor.getString ( "url");
+                    if(!cursor.getString ( "direccion" ).contains ( Integer.toString ( 166) ) ) {
 
-                    restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"),cursor.getString ( "direccion") ,"32km " ,cursor.getString ( "imagen" ),cursor.getString ( "url" )) );
+                        direRestaurantes=cursor.getString ( "direccion") + ", 8";
 
-                    restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10km" ,"https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_960_720.jpg", cursor.getString ( "url" )));
+                        restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"), direRestaurantes,"32km " ,cursor.getString ( "imagen" ),urlRestaurantes ));
+                    }else{
+                        urlRestaurantes = cursor.getString ( "url" );
+                        restaurantes.add ( new Restaurante ( cursor.getString ( "nombre"), cursor.getString ( "direccion" ),"32km " ,cursor.getString ( "imagen" ),urlRestaurantes ));
+                    }
+                    Log.e ( "Direccion", cursor.getString ( "direccion"));
 
-                    restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20km" ,"https://cdn.pixabay.com/photo/2015/09/02/12/35/bar-918541_960_720.jpg" ,cursor.getString ( "url" )));
-
-                    restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29km" ,"https://cdn.pixabay.com/photo/2015/03/26/09/54/restaurant-690569_960_720.jpg" ,cursor.getString ( "url" ) ));
-
-                    restaurantes.add ( new Restaurante ( "Fruits vegen","Paseo castellana, 102 Madrid","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" , cursor.getString ( "url" )));
 
 
                 }
+
+
+
+                restaurantes.add ( new Restaurante ( "El velero","Plaza cervantes, Alcala de Henares","10km" ,"https://cdn.pixabay.com/photo/2016/11/18/22/21/architecture-1837150_960_720.jpg", urlRestaurantes));
+
+                restaurantes.add ( new Restaurante ( "El meson de tu pueblo","Av de Beleña, 9 Guadalajara","20km" ,"https://cdn.pixabay.com/photo/2015/09/02/12/35/bar-918541_960_720.jpg" ,urlRestaurantes));
+
+                restaurantes.add ( new Restaurante ( "La bodega de  oro","Guzman el bueno,30 Madrid","29km" ,"https://cdn.pixabay.com/photo/2015/03/26/09/54/restaurant-690569_960_720.jpg" ,urlRestaurantes ));
+
+                restaurantes.add ( new Restaurante ( "Indalo","Paseo castellana, 102 Madrid","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" , urlRestaurantes));
+
+                restaurantes.add ( new Restaurante ( "Indalo","Avenida de la alcarria, 2-4  Alcala de henares","32km" ,"https://cdn.pixabay.com/photo/2015/05/31/11/23/table-791167_960_720.jpg" , urlRestaurantes));
+
                 basicDataSource.close ();
                 con.close ();
                 statement.close ();

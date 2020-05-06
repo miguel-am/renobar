@@ -17,7 +17,18 @@
         android:roundIcon="@drawable/splashscreen2"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Portada" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+
+        <activity android:name="com.pruebas.ades.renobar.Portada" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -28,22 +39,22 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBp--aq8v6E_0juCE3LgQ4lhNWhDthJH9k" />
 
         <activity
-            android:name=".maps_renobar"
+            android:name="com.pruebas.ades.renobar.maps_renobar"
             android:label="@string/title_activity_maps_renobar" />
-        <activity android:name=".ListaRestaurantes" />
-        <activity android:name=".PerfilInstagram" />
-        <activity android:name=".RestauranteSeleccionado"/>
-        <activity android:name=".SplashScreen">
+        <activity android:name="com.pruebas.ades.renobar.ListaRestaurantes" />
+        <activity android:name="com.pruebas.ades.renobar.PerfilInstagram" />
+        <activity android:name="com.pruebas.ades.renobar.RestauranteSeleccionado"/>
+        <activity android:name="com.pruebas.ades.renobar.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.pruebas.ades.renobar.MainActivity" />
     </application>
 
 </manifest>

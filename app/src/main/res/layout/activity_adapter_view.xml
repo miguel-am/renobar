@@ -12,27 +12,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorToolbar">
-      <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+
 
           <ImageView
               android:layout_width="185dp"
               android:layout_height="130dp"
               android:id="@+id/imgAdapter"/>
-          <TextView
-              android:layout_width="75dp"
-              android:layout_height="wrap_content"
-              android:background="#FF000040"
-              android:backgroundTint="@android:color/black"
-              android:text="27km"
-              android:textAlignment="center"
-              android:layout_marginStart="10dp"
-              android:textStyle="normal"
-              android:layout_marginTop="100dp"
-              android:textColor="@android:color/white"
-              android:id="@+id/tvDistKmts"/>
-      </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,21 +30,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PRUEBA1,PRUEBA2,PRUEBA3"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="5sp"
                 android:textStyle="bold"
-                android:layout_marginTop="7dp"
-                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:layout_marginTop="7sp"
+                android:textColor="@android:color/white"
                 android:id="@+id/tvNomRestaurante"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PRUEBA1,PRUEBA2,PRUEBA3"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="5sp"
                 android:textStyle="normal"
-                android:layout_marginTop="7dp"
-                android:textColor="@android:color/black"
+                android:layout_marginTop="7sp"
+                android:textColor="@android:color/white"
                 android:id="@+id/tvDireRestaurante"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="27km"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="115sp"
+                android:textStyle="normal"
+                android:layout_marginTop="10sp"
+                android:textColor="@android:color/white"
+                android:id="@+id/tvDistKmts"/>
 
         </LinearLayout>
 

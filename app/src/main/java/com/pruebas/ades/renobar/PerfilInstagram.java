@@ -12,11 +12,8 @@ import android.os.Bundle;
 
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.pruebas.ades.renobar.R;
 
 public class PerfilInstagram extends AppCompatActivity {
 

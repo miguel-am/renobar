@@ -17,8 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -137,12 +135,13 @@ public class maps_renobar extends AppCompatActivity implements OnMapReadyCallbac
 
 
             geo = new Geocoder ( getApplicationContext () );
-            maxResultados = 5;
+            maxResultados = 1000;
 
             dire = new ArrayList <> ();
             for (int i = 0; i < direRestaurante.size (); i++) {
                 dire.add ( direRestaurante.get ( i ).getDireccion () );
                 direccion = geo.getFromLocationName ( direRestaurante.get ( i ).getDireccion (), maxResultados );
+//                Log.e ( "restaurantes", String.valueOf ( direccion.get ( i ).getLatitude () ) );
                 locRestaurantes = new LatLng ( direccion.get ( 0 ).getLatitude (), direccion.get ( 0 ).getLongitude () );
 
                 mapa.moveCamera ( CameraUpdateFactory.newLatLngZoom ( locRestaurantes, 7 ) );

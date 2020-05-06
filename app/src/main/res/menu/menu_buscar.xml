@@ -4,6 +4,16 @@
     <item android:id="@+id/lupa"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/lupa"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" >
+
+        <menu>
+            <item android:id="@+id/itemDire"
+                android:title="@string/direRestaurante" />
+            <item android:id="@+id/itemNombre"
+                android:title="@string/nombreRestaurante" />
+        </menu>
+
+
+    </item>
 
 </menu>

@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ImageView imgLogo;
     private Button btnQr,btnInstagram,btnRestaurantes;
-    private TextView tvPortada;
+    private TextView tvPortada, tvArea;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -51,12 +50,25 @@ public class MainActivity extends AppCompatActivity {
         btnRestaurantes= findViewById(R.id.btnRestaurante);
 
         tvPortada=findViewById(R.id.tvAppRenobar);
+        tvArea=findViewById(R.id.tvArea);
+
+        tvArea.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Intent portada=new Intent(MainActivity.this,Portada.class);
+                String areaPrivada="https://www.google.es";
+                portada.putExtra ( "area",areaPrivada );
+                startActivity ( portada );
+            }
+        } );
 
         tvPortada.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
 
                 Intent portada=new Intent(MainActivity.this,Portada.class);
+                String appRenobar="https://www.apprenobar.es";
+                portada.putExtra ( "appempresas",appRenobar );
                 startActivity ( portada );
             }
         } );
@@ -86,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new IntentIntegrator ( MainActivity.this ).initiateScan ();
+                new IntentIntegrator ( MainActivity.this ).setOrientationLocked ( false ).initiateScan ();
 
             }
         } );
